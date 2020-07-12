@@ -1,16 +1,42 @@
 const mongoose = require('mongoose');
 
-let schema = mongoose.Schema({
-  description: String,
-  value: Number,
-  category: String,
-  year: Number,
-  month: Number,
-  day: Number,
-  yearMonth: String,
-  yearMonthDay: String,
-  type: String,
-});
+const schema = mongoose.Schema({
+  type: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  value: {
+    type: Number,
+    required: true,
+    min: [0, `set type to 'despesa' for negative values`]
+  },
+  day: {
+    type: Number,
+    required: true
+  },
+  month: {
+    type: Number,
+    required: true
+  },
+  year: {
+    type: Number,
+    required: true
+  },
+  yearMonth: {
+    type: String
+  },
+  yearMonthDay: {
+    type: String
+  }
+}, { toJSON: { virtuals: true } });
 
 const TransactionModel = mongoose.model('transaction', schema);
 
