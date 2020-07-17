@@ -1,0 +1,33 @@
+import React from 'react';
+
+import Button from '../components/Button';
+import Select from '../components/Select';
+
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+
+const Periods = (props) => {
+  const { value, periods, onSelectChange } = props;
+
+  return (
+    <div className="section">
+      <h3>Controle Financeiro Pessoal</h3>
+      <div className="row valign-wrapper">
+        <div className="col">
+          <Button><FiArrowLeft /></Button>
+        </div>
+        <div className="col">
+          <Select
+            value={value}
+            periods={periods}
+            onSelectChange={onSelectChange}
+          />
+        </div>
+        <div className="col">
+          <Button><FiArrowRight /></Button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Periods;

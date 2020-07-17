@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import api from './services/api.js';
+import moment from 'moment';
+import { getPeriods } from './services/api';
 
-import Button from './components/Button';
-import Select from './components/Select';
+import Spinner from './components/Spinner';
 
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import Periods from './sections/Periods';
 
 export default function App() {
   const [periods, setPeriods] = useState([]);
-  const [selectedPeriod, setSelectedPeriod] = useState('');
+  const [selectedPeriod, setSelectedPeriod] = useState(moment().format('YYYY-MM'));
 
   useEffect(() => {
-    const getPeriods = async () => {
-      try {
-        const response = await api.get('/periods');
-        setPeriods(response.data);
-      } catch (error) {
-        // the user who fights
-      }
+    const initialize = async () => {
+      const response = await getPeriods();
+      setPeriods(response);
     }
 
-    getPeriods();
+    initialize();
   }, []);
 
   const handleSelectChange = (value) => {
@@ -31,30 +27,14 @@ export default function App() {
     <div className="container">
       <div className="row center">
         <h1>Bootcamp Full Stack - Desafio Final</h1>
-        <div className="section">
-          <h3>Controle Financeiro Pessoal</h3>
-          <div className="row valign-wrapper">
-            <div className="col">
-              <Button><FiArrowLeft /></Button>
-            </div>
-            <div className="col">
-              <Select
-                value={selectedPeriod}
-                periods={periods}
-                onSelectChange={handleSelectChange}
-              />
-            </div>
-            <div className="col">
-              <Button><FiArrowRight /></Button>
-            </div>
-          </div>
-        </div>
-        
-        <div className="divider"></div>
-
-        <div className="section">
-          
-        </div>
+        {periods.length === 0 && <Spinner />}
+        {periods.length > 0 &&
+          <Periods
+            value={selectedPeriod}
+            periods={periods}
+            onSelectChange={handleSelectChange}
+          />
+        }
       </div>
     </div>
   );

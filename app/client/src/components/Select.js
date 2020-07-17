@@ -1,20 +1,12 @@
-import React from 'react';
-import moment from 'moment';
+import React, { useEffect } from 'react';
 import M from 'materialize-css';
 
 const Select = (props) => {
   const { value, periods, onSelectChange } = props;
 
-  let select = document.querySelector('.periods');
-
-  periods.forEach(period => {
-    let option = document.createElement('option');
-    option.text = moment(period._id).format('MMM/YYYY');
-    option.value = period._id;
-    select.appendChild(option);
-  });
-
-  M.FormSelect.init(select);
+  useEffect(() => {
+    M.AutoInit();
+  }, []);
 
   const handleChange = (event) => {
     onSelectChange(event.target.value);
@@ -22,7 +14,14 @@ const Select = (props) => {
 
   return (
     <div className="input-field">
-      <select className="periods" value={value} onChange={handleChange}>
+      <select value={value} onChange={handleChange}>
+        {periods.map((period) => {
+          return (
+            <option key={period._id} value={period._id}>
+              {period._id}
+            </option>
+          );
+        })}
       </select>
     </div>
   )
