@@ -11,4 +11,9 @@ const getPeriods = async () => {
   return response.data;
 }
 
-export { getPeriods };
+const getTransactions = async (period) => {
+  const response = await api.get(`?period=${period}`);
+  return response.data;
+}
+
+export { getPeriods, getTransactions };

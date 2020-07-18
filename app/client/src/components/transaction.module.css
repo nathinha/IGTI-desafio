@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+
+.transaction {
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.day {
+  font-family: 'Nova Mono', Courier, monospace;
+  font-size: 20pt;
+}
+
+.category {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.value {
+  font-family: 'Nova Mono', Courier, monospace;
+  font-size: 16pt;
+}
+
+.icons > * {
+  margin: 5px;
+}
