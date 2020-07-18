@@ -4,17 +4,21 @@ import M from 'materialize-css';
 const Select = (props) => {
   const { value, periods, onSelectChange } = props;
 
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
-
   const handleChange = (event) => {
+    console.log(event);
     onSelectChange(event.target.value);
   }
 
+  useEffect(() => {
+    M.AutoInit();
+
+    const select = document.querySelector('.periods');
+    select.addEventListener('input', handleChange)
+  });
+
   return (
     <div className="input-field">
-      <select value={value} onChange={handleChange}>
+      <select className="periods" value={value} onChange={handleChange}>
         {periods.map((period) => {
           return (
             <option key={period._id} value={period._id}>

@@ -1,8 +1,17 @@
 import React from 'react';
 
-const Button = ({ children }) => {
+const Button = ({ clickFunction, children }) => {
+  const handleClick = () => {
+    clickFunction();
+  }
+
   return (
-    <button className="waves-effect waves-light btn">{children}</button>
+    <button
+      onClick={handleClick}
+      className="waves-effect waves-light btn"
+    >
+      {children}
+    </button>
   )
 }
 
