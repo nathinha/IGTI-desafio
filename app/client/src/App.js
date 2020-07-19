@@ -2,9 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import moment from 'moment';
 import { getPeriods, getTransactions } from './services/api';
 
-import Spinner from './components/Spinner';
-
 import Periods from './sections/Periods';
+import Summary from './sections/Summary';
 import Transactions from './sections/Transactions';
 
 export default function App() {
@@ -14,20 +13,20 @@ export default function App() {
 
   useEffect(() => {
     const initialize = async () => {
-      const response = await getPeriods();
-      setPeriods(response);
+      let p = await getPeriods();
+      setPeriods(p);
     }
 
     const gatherData = async () => {
-      if (periods.length > 0) {
-        transactions.current = await getTransactions(selectedPeriod);
-      }
+      transactions.current = await getTransactions(selectedPeriod);
     }
 
-    initialize();
+    if (periods.length === 0) {
+      initialize();
+    }
     gatherData();
 
-  }, [periods.length, selectedPeriod]);
+  }, [periods, selectedPeriod]);
 
   const handleSelectChange = (value) => {
     setSelectedPeriod(value);
@@ -37,28 +36,15 @@ export default function App() {
     <div className="container">
       <div className="row center">
         <h1>Bootcamp Full Stack - Desafio Final</h1>
-        {periods.length === 0 && <Spinner />}
-        {periods.length > 0 &&
-          <>
-            <Periods
-              value={selectedPeriod}
-              periods={periods}
-              onSelectChange={handleSelectChange}
-            />
-            {transactions.current.length === 0 && <Spinner />}
-            {transactions.current.length > 0 &&
-              <>
-                <div className="divider"></div>
-
-                <h5>Summary Placeholder</h5>
-
-                <div className="divider"></div>
-
-                <Transactions items={transactions.current} />
-              </>
-            }
-          </>
-        }
+        <Periods
+          value={selectedPeriod}
+          periods={periods}
+          onSelectChange={handleSelectChange}
+        />
+        <div className="divider"></div>
+        <Summary items={transactions.current} />
+        <div className="divider"></div>
+        <Transactions items={transactions.current} />
       </div>
     </div>
   );

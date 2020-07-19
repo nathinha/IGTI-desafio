@@ -5,7 +5,6 @@ const Select = (props) => {
   const { value, periods, onSelectChange } = props;
 
   const handleChange = (event) => {
-    console.log(event);
     onSelectChange(event.target.value);
   }
 

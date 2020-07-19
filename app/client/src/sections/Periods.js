@@ -8,13 +8,18 @@ import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 const Periods = (props) => {
   const { value, periods, onSelectChange } = props;
 
+  const select = document.querySelector('.periods');
+
+  const dispatchOnChange = () => {
+    let event = document.createEvent('HTMLEvents');
+    event.initEvent('change', true, false);
+    select.dispatchEvent(event);
+  }
+
   const handleClickBack = () => {
-    const select = document.querySelector('.periods');
     if (select.selectedIndex > 0) {
       select.selectedIndex -= 1;
-
-      let event = new Event('change');
-      select.dispatchEvent(event);
+      dispatchOnChange();
     }
   }
 
@@ -22,9 +27,7 @@ const Periods = (props) => {
     const select = document.querySelector('.periods');
     if (select.selectedIndex < select.length - 1) {
       select.selectedIndex += 1;
-
-      let event = new Event('change');
-      select.dispatchEvent(event);
+      dispatchOnChange();
     }
   }
 
