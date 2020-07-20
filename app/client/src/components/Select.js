@@ -10,9 +10,6 @@ const Select = (props) => {
 
   useEffect(() => {
     M.AutoInit();
-
-    const select = document.querySelector('.periods');
-    select.addEventListener('input', handleChange)
   });
 
   return (

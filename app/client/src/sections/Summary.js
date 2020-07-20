@@ -17,7 +17,7 @@ const Summary = ({ items }) => {
   const saldoColor = saldo < 0 ? "red-text text-darken-1" : "green-text text-darken-1";
 
   return (
-    <div className="row">
+    <div className={`row ${css.container}`}>
       <div className="col l3 left-align">
         <span className={css.bold}>Lançamentos: </span>
         <span>{lancamentos}</span>

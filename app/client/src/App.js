@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { getPeriods, getTransactions } from './services/api';
 
@@ -6,27 +6,29 @@ import Periods from './sections/Periods';
 import Summary from './sections/Summary';
 import Transactions from './sections/Transactions';
 
+
 export default function App() {
   const [periods, setPeriods] = useState([]);
   const [selectedPeriod, setSelectedPeriod] = useState(moment().format('YYYY-MM'));
-  const transactions = useRef([]);
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const initialize = async () => {
-      let p = await getPeriods();
-      setPeriods(p);
+      const t = await getPeriods();
+      setPeriods(t);
     }
 
+    initialize();
+  }, []);
+
+  useEffect(() => {
     const gatherData = async () => {
-      transactions.current = await getTransactions(selectedPeriod);
+      const t = await getTransactions(selectedPeriod);
+      setTransactions(t);
     }
 
-    if (periods.length === 0) {
-      initialize();
-    }
     gatherData();
-
-  }, [periods, selectedPeriod]);
+  }, [selectedPeriod]);
 
   const handleSelectChange = (value) => {
     setSelectedPeriod(value);
@@ -42,9 +44,9 @@ export default function App() {
           onSelectChange={handleSelectChange}
         />
         <div className="divider"></div>
-        <Summary items={transactions.current} />
+        <Summary items={transactions} />
         <div className="divider"></div>
-        <Transactions items={transactions.current} />
+        <Transactions items={transactions} />
       </div>
     </div>
   );
