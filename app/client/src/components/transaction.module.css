@@ -2,22 +2,22 @@
 
 .transaction {
   border-radius: 5px;
-  padding: 5px 0;
+  padding: 5px;
 }
 
 .day {
   font-family: 'Nova Mono', Courier, monospace;
-  font-size: 20pt;
+  font-size: 22px;
 }
 
 .category {
-  font-size: 14pt;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .value {
   font-family: 'Nova Mono', Courier, monospace;
-  font-size: 16pt;
+  font-size: 18px;
 }
 
 .icons > * {

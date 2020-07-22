@@ -16,4 +16,9 @@ const getTransactions = async (period) => {
   return response.data;
 }
 
-export { getPeriods, getTransactions };
+const deleteTransaction = async (id) => {
+  const response = await api.delete(`/${id}`);
+  return response.data;
+}
+
+export { getPeriods, getTransactions, deleteTransaction };

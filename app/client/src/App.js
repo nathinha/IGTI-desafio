@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { getPeriods, getTransactions } from './services/api';
+import { getPeriods, getTransactions, deleteTransaction } from './services/api';
 
 import Periods from './sections/Periods';
 import Summary from './sections/Summary';
@@ -34,6 +34,13 @@ export default function App() {
     setSelectedPeriod(value);
   }
 
+  const handleDeleteTransaction = (id) => {
+    deleteTransaction(id);
+    setTransactions(
+      transactions.filter((transaction) => transaction._id !== id)
+    );
+  }
+
   return (
     <div className="container">
       <div className="row center">
@@ -46,7 +53,10 @@ export default function App() {
         <div className="divider"></div>
         <Summary items={transactions} />
         <div className="divider"></div>
-        <Transactions items={transactions} />
+        <Transactions
+          items={transactions}
+          onDelete={handleDeleteTransaction}
+        />
       </div>
     </div>
   );
