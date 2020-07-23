@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { getPeriods, getTransactions, deleteTransaction } from './services/api';
+import { getPeriods, getTransactions, deleteTransaction, updateTransaction } from './services/api';
 
 import Periods from './sections/Periods';
 import Summary from './sections/Summary';
@@ -34,6 +34,10 @@ export default function App() {
     setSelectedPeriod(value);
   }
 
+  const handleUpdateTransaction = (id) => {
+    updateTransaction(id);
+  }
+
   const handleDeleteTransaction = (id) => {
     deleteTransaction(id);
     setTransactions(
@@ -55,6 +59,7 @@ export default function App() {
         <div className="divider"></div>
         <Transactions
           items={transactions}
+          onUpdate={handleUpdateTransaction}
           onDelete={handleDeleteTransaction}
         />
       </div>

@@ -21,4 +21,9 @@ const deleteTransaction = async (id) => {
   return response.data;
 }
 
-export { getPeriods, getTransactions, deleteTransaction };
+const updateTransaction = async (id) => {
+  const response = await api.update(`/${id}`);
+  return response.data;
+}
+
+export { getPeriods, getTransactions, deleteTransaction, updateTransaction };

@@ -27,7 +27,7 @@ const ModalDelete = (props) => {
           <div className="col">
             <div className="row valign-wrapper">
               <div className="col l10 left-align">
-                <h5 className="red-text" >Remoção de transação</h5>
+                <h5 className="red-text">Remoção de Transação</h5>
               </div>
               <div className="col l2 right-align">
                 <button
