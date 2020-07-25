@@ -33,23 +33,22 @@ const Periods = (props) => {
 
   return (
     <div className="section">
-      <h3>Controle Financeiro Pessoal</h3>
       <div className="row valign-wrapper">
-        <div className="col">
+        <div className="col l3">
           <Button
             clickFunction={handleClickBack}
           >
             <FiArrowLeft />
           </Button>
         </div>
-        <div className="col">
+        <div className="col l6">
           <Select
             value={value}
             periods={periods}
             onSelectChange={onSelectChange}
           />
         </div>
-        <div className="col">
+        <div className="col l3">
           <Button
             clickFunction={handleClickForw}
           >

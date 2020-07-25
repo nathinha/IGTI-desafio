@@ -26,4 +26,9 @@ const updateTransaction = async (id, transaction) => {
   return response.data;
 }
 
-export { getPeriods, getTransactions, deleteTransaction, updateTransaction };
+const addTransaction = async (transaction) => {
+  const response = await api.put('/', transaction);
+  return response.data;
+}
+
+export { getPeriods, getTransactions, deleteTransaction, updateTransaction, addTransaction };

@@ -16,7 +16,7 @@ const ModalForm = (props) => {
   const [newTransaction, setNewTransaction] = useState({});
 
   useEffect(() => {
-    if (transaction !== null) {
+    if (transaction !== undefined) {
       setCategoriesList(transaction.type === '-' ? expenseCategories : revenueCategories);
       setSelectedCategory(transaction.category);
       setNewTransaction(transaction);
@@ -92,8 +92,8 @@ const ModalForm = (props) => {
 
     setNewTransaction(prev => ({
       ...prev,
-      day: date.day(),
-      month: date.month(),
+      day: date.date(),
+      month: date.month() + 1,
       year: date.year(),
       yearMonth: date.format('YYYY-MM'),
       yearMonthDay: date.format('YYYY-MM-DD')
@@ -111,7 +111,7 @@ const ModalForm = (props) => {
           <div className="col">
             <div className="row valign-wrapper">
               <div className="col l10 left-align">
-                <h5>Atualização de Transação</h5>
+                <h5>{transaction !== undefined ? 'Atualizar' : 'Incluir'} Transação</h5>
               </div>
               <div className="col l2 right-align">
                 <button
@@ -133,8 +133,8 @@ const ModalForm = (props) => {
                     type="radio"
                     id="expense"
                     onChange={handleExpenseChange}
-                    defaultChecked={transaction && transaction.type === '-'}
-                    disabled={transaction !== null}
+                    defaultChecked={transaction !== undefined && transaction.type === '-'}
+                    disabled={transaction !== undefined}
                   />
                   <span>Despesa</span>
                 </label>
@@ -147,8 +147,8 @@ const ModalForm = (props) => {
                     type="radio"
                     id="revenue"
                     onChange={handleRevenueChange}
-                    defaultChecked={transaction && transaction.type === '+'}
-                    disabled={transaction !== null}
+                    defaultChecked={transaction !== undefined && transaction.type === '+'}
+                    disabled={transaction !== undefined}
                   />
                   <span>Receita</span>
                 </label>
@@ -182,7 +182,7 @@ const ModalForm = (props) => {
                   id="description"
                   type="text"
                   onChange={handleDescriptionChange}
-                  defaultValue={transaction && transaction.description}
+                  defaultValue={transaction !== undefined ? transaction.description : ''}
                 />
                 <label className="active" htmlFor="description">Descrição</label>
               </div>
@@ -196,7 +196,7 @@ const ModalForm = (props) => {
                     id="description"
                     type="number"
                     onChange={handleValueChange}
-                    defaultValue={transaction && transaction.value}
+                    defaultValue={transaction !== undefined ? transaction.value : ''}
                   />
                   <label className="active" htmlFor="description">Valor</label>
                 </div>
@@ -206,7 +206,7 @@ const ModalForm = (props) => {
                   className="datepicker"
                   type="date"
                   onChange={handleDateChange}
-                  defaultValue={transaction && transaction.yearMonthDay}
+                  defaultValue={transaction !== undefined ? transaction.yearMonthDay : ''}
                 />
               </div>
             </div>
