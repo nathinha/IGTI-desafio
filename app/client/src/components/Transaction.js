@@ -36,7 +36,7 @@ const Transaction = (props) => {
   }
 
   // perform update if modal is closed and executeUpdate is true
-  const onExecuteUpdate = (executeUpdate, transaction) => {
+  const onExecuteUpdate = (executeUpdate, transaction = null) => {
     setIsUpdateModalOpen(false);
 
     if (executeUpdate === true) {

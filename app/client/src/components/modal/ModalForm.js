@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import moment from 'moment';
+import M from 'materialize-css';
 
 import { expenseCategories, revenueCategories } from '../../utils/categories';
 import { FiXSquare } from 'react-icons/fi';
@@ -13,14 +14,12 @@ const ModalForm = (props) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [categoriesList, setCategoriesList] = useState([]);
   const [newTransaction, setNewTransaction] = useState({});
-  const active = useRef('');
 
   useEffect(() => {
     if (transaction !== null) {
       setCategoriesList(transaction.type === '-' ? expenseCategories : revenueCategories);
       setSelectedCategory(transaction.category);
       setNewTransaction(transaction);
-      active.current = 'active';
     }
   }, [transaction]);
 
@@ -29,7 +28,16 @@ const ModalForm = (props) => {
   }
 
   const handleSubmit = () => {
-    execute(true, newTransaction);
+    // validates new transaction: no property should be empty 
+    if ((newTransaction.hasOwnProperty('type') && newTransaction.type !== '') &&
+      (newTransaction.hasOwnProperty('category') && newTransaction.category !== '') &&
+      (newTransaction.hasOwnProperty('description') && newTransaction.description !== '') &&
+      (newTransaction.hasOwnProperty('value') && newTransaction.value > 0) &&
+      (newTransaction.hasOwnProperty('yearMonthDay') && newTransaction.yearMonthDay !== 'Invalid date')) {
+      execute(true, newTransaction);
+    } else {
+      M.toast({ html: 'No field should be empty and value must be greater than 0.', classes: 'rounded red white-text' })
+    }
   }
 
   const handleExpenseChange = (_) => {
@@ -71,7 +79,7 @@ const ModalForm = (props) => {
   }
 
   const handleValueChange = (event) => {
-    const value = event.target.value;
+    const value = parseInt(event.target.value);
 
     setNewTransaction(prev => ({
       ...prev,
@@ -126,6 +134,7 @@ const ModalForm = (props) => {
                     id="expense"
                     onChange={handleExpenseChange}
                     defaultChecked={transaction && transaction.type === '-'}
+                    disabled={transaction !== null}
                   />
                   <span>Despesa</span>
                 </label>
@@ -139,6 +148,7 @@ const ModalForm = (props) => {
                     id="revenue"
                     onChange={handleRevenueChange}
                     defaultChecked={transaction && transaction.type === '+'}
+                    disabled={transaction !== null}
                   />
                   <span>Receita</span>
                 </label>
@@ -169,13 +179,12 @@ const ModalForm = (props) => {
             <div className="row">
               <div className="input-field">
                 <input
-                  className="validate"
                   id="description"
                   type="text"
                   onChange={handleDescriptionChange}
                   defaultValue={transaction && transaction.description}
                 />
-                <label htmlFor="description">Descrição</label>
+                <label className="active" htmlFor="description">Descrição</label>
               </div>
             </div>
 
@@ -184,13 +193,12 @@ const ModalForm = (props) => {
               <div className="col">
                 <div className="input-field">
                   <input
-                    className="validate"
                     id="description"
                     type="number"
                     onChange={handleValueChange}
                     defaultValue={transaction && transaction.value}
                   />
-                  <label htmlFor="description">Valor</label>
+                  <label className="active" htmlFor="description">Valor</label>
                 </div>
               </div>
               <div className="col">

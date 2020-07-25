@@ -21,8 +21,8 @@ const deleteTransaction = async (id) => {
   return response.data;
 }
 
-const updateTransaction = async (id) => {
-  const response = await api.update(`/${id}`);
+const updateTransaction = async (id, transaction) => {
+  const response = await api.patch(`/${id}`, transaction);
   return response.data;
 }
 
