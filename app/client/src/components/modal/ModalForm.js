@@ -79,7 +79,7 @@ const ModalForm = (props) => {
   }
 
   const handleValueChange = (event) => {
-    const value = parseInt(event.target.value);
+    const value = parseFloat(event.target.value);
 
     setNewTransaction(prev => ({
       ...prev,
@@ -195,6 +195,7 @@ const ModalForm = (props) => {
                   <input
                     id="description"
                     type="number"
+                    step="0.01"
                     onChange={handleValueChange}
                     defaultValue={transaction !== undefined ? transaction.value : ''}
                   />

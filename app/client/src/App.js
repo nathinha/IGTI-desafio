@@ -115,7 +115,7 @@ export default function App() {
 
         <div className="divider"></div>
 
-        <Summary items={transactions} />
+        <Summary items={filteredTransactions} />
 
         <div className="divider"></div>
 
